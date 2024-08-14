@@ -5,10 +5,10 @@ import { useEffect } from "react";
 function Login () {
   const navigate = useNavigate();
   const {currentUser, signInWithGoogle} = UserAuth();
-  console.log(currentUser)
+  // console.log(currentUser)
   
   const handleLogin = async() =>{
-    console.log("handle login clicked")
+    // console.log("handle login clicked")
     try {
       await signInWithGoogle();
     } catch (error) {

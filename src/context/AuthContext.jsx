@@ -1,6 +1,6 @@
-import { createContext, useContext, useEffect, useState } from "react";
 import { GoogleAuthProvider, onAuthStateChanged, signInWithRedirect } from "firebase/auth";
-import {auth} from "../Firebase"
+import { createContext, useContext, useEffect, useState } from "react";
+import { auth } from "../Firebase";
 
 // create context
 const AuthContext = createContext();
@@ -16,19 +16,25 @@ export const AuthProvider = ({children}) =>{
         const provider = new GoogleAuthProvider();
         signInWithRedirect(auth, provider)
     }
+    const signOut = () =>{
+        setCurrentUser(null)
+        localStorage.clear()
+    }
 
     const value = {
         currentUser,
         setCurrentUser,
-        signInWithGoogle
+        signInWithGoogle,
+        signOut
     }
     useEffect(()=>{
+        
         const unsubscribe = onAuthStateChanged(auth,(user)=>{
             console.log("printing user\n")
-            console.log(user)
             setCurrentUser(user)
             setLoading(false)
         })
+
         return () => unsubscribe();
     },[])
     
