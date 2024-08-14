@@ -10,7 +10,7 @@ function Navbar () {
     }
   }
   return (
-    <div className='navbar bg-neutral text-neutral-content'>
+    <div className='navbar fixed z-10 bg-neutral text-neutral-content'>
       <div className='containerWrap flex justify-between'>
         <button className='btn btn-ghost text-xl'>Chat App</button>
         {currentUser ? <button onClick={handleSignOut} className='btn btn-neutral'>Logout</button> : ""}

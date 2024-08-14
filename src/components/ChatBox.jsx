@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Message from './Message'
 import { collection, query, where, onSnapshot, orderBy, limit } from 'firebase/firestore'
 import { db } from '../Firebase'
@@ -6,6 +6,14 @@ import { useSearchParams } from 'react-router-dom'
 
 function ChatBox () {
     const [messages, setMessages] = useState([]);
+    const endMessageRef = useRef()
+
+    const ScrollToBottom = () =>{
+        endMessageRef.current.scrollIntoView({behavior: "smooth"})
+    }
+
+    useEffect(ScrollToBottom,[messages])
+
 //   const messages = [
 //     {
 //       id: 1,
@@ -42,6 +50,7 @@ function ChatBox () {
           return <Message key={msg.id} message={msg} />
         // console.log(msg)
         })}
+        <div ref={endMessageRef}></div>
     </div>
   )
 }
