@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, onAuthStateChanged, signInWithRedirect } from "firebase/auth";
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signInWithRedirect, signOut } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../Firebase";
 
@@ -14,23 +14,35 @@ export const AuthProvider = ({children}) =>{
     // signIn with google
     const signInWithGoogle = () =>{
         const provider = new GoogleAuthProvider();
-        signInWithRedirect(auth, provider)
+        signInWithPopup(auth, provider).then((user)=>{
+            // localStorage.setItem("user", user)
+            setCurrentUser(user.user)
+        })
     }
-    const signOut = () =>{
-        setCurrentUser(null)
-        localStorage.clear()
+    // manual signOut
+    // const signOut = () =>{
+    //     setCurrentUser(null)
+    //     localStorage.clear()
+    // }
+    // googleSignOut
+
+    const logout = () => {
+        signOut(auth);
     }
 
     const value = {
         currentUser,
         setCurrentUser,
         signInWithGoogle,
-        signOut
+        signOut,
+        logout
     }
     useEffect(()=>{
         
         const unsubscribe = onAuthStateChanged(auth,(user)=>{
             console.log("printing user\n")
+            localStorage.setItem("user",user)
+            console.log(localStorage.getItem('user'))
             setCurrentUser(user)
             setLoading(false)
         })
