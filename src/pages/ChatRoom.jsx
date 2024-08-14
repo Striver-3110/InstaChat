@@ -1,6 +1,12 @@
+import ChatBox from "../components/ChatBox"
+import SendMessage from "../components/SendMessage"
+
 function ChatRoom() {
   return (
-    <div>ChatRoom</div>
+    <div>
+      <ChatBox/>
+      <SendMessage/>
+    </div>
   )
 }
 
